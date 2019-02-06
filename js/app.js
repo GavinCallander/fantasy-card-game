@@ -34,11 +34,6 @@ var compDeck = [
         name: "stuff 3",
         atk: 3,
         hp: 3
-    },
-    {
-        name: "stuff 4",
-        atk: 4,
-        hp: 4
     }
 ];
 // Declare DOM variables
@@ -49,12 +44,7 @@ var compField = [];
 var playerDisc = [];
 var compDisc = [];
 var cHand = document.querySelectorAll(".chandcard");
-// var cHandName = document.querySelectorAll(".chname");
-// var cHandAtk = document.querySelectorAll(".chatk");
-// var cHandHp = document.querySelectorAll(".chhp");
-var pHand = document.querySelectorAll(".phcard");
-var pHandName = document.querySelectorAll(".phatk");
-var pHandHp = document.querySelectorAll(".phhp");
+var pHand = document.querySelectorAll(".phandcard");
 
 
 
@@ -64,24 +54,27 @@ var pHandHp = document.querySelectorAll(".phhp");
 document.addEventListener("DOMContentLoaded", function() {
     for (let i = 0; i < 3; i++) {
         compHand.push(compDeck.shift());
-        // compDeck.shift();
         playerHand.push(playerDeck.shift());
-        // playerDeck.shift();
     };
-    showCompCard();
+    showCompCards();
+    showPlayerCards();
 });
-console.log(playerHand);
-console.log(compHand);
-
 // show back of all cards in comp hand  *** Replace with image
-function showCompCard () {
-    cHand.forEach(function(card, i) {
-        card.children[0].innerHTML = compHand[i].name;
-        card.children[1].innerHTML = compHand[i].atk;
-        card.children[2].innerHTML = compHand[i].hp;
-        console.dir(cHand);
+function showCompCards() {
+    compHand.forEach(function(card, i) {
+        cHand[i].children[0].textContent = card.name;
+        cHand[i].children[1].textContent = card.atk;
+        cHand[i].children[2].textContent = card.hp;
     });
-}
+};
+// show values of all cards in player hand *** Style once completed
+function showPlayerCards() {
+    playerHand.forEach(function(card, i) {
+        pHand[i].children[0].textContent = card.name;
+        pHand[i].children[1].textContent = card.atk;
+        pHand[i].children[2].textContent = card.hp;
+    });
+};
 
 
 

@@ -65,12 +65,54 @@ section {
     color: white;
 }
 
+.chname {
+    display: inline-block;
+    border: .5px solid black;
+    width: 90%;
+    height: 50%;
+}
+
+.chatk {
+    display: inline-block;
+    border: .5px solid black;
+    width: 40%;
+    height: 40%;
+}
+
+.chhp {
+    display: inline-block;
+    border: .5px solid black;
+    width: 40%;
+    height: 40%;
+}
+
 .phandcard {
     display: inline-block;
     border: 1px dashed white;
     width: 15%;
     height: 90%;
     vertical-align: top;
+}
+
+.phname {
+    display: inline-block;
+    border: .5px solid black;
+    width: 90%;
+    height: 50%;
+}
+
+.phatk {
+    display: inline-block;
+    border: .5px solid black;
+    width: 40%;
+    height: 40%;
+}
+
+.phhp {
+    display: inline-block;
+    border: .5px solid black;
+    width: 40%;
+    height: 40%;
 }
 
 .field {
