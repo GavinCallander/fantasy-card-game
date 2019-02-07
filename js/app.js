@@ -20,7 +20,7 @@ var compDeck = [
         name: "stuff 4",
         atk: 4,
         hp: 4
-    }
+    },
 ];
 var playerDeck = [
     {
@@ -75,8 +75,6 @@ document.addEventListener("DOMContentLoaded", function() {
     };
     startingPlayer();
     turn();
-    playerTurn();
-    compTurn();
     showCompHandCards();
     showPlayerHandCards();
 });
@@ -96,8 +94,8 @@ function turn() {
         playerTurn();
     } else {
         compTurn();
-    }
-}
+    };
+};
 // player turn logic
 function playerTurn() {
     if (pDraw === false) {
@@ -114,8 +112,16 @@ function playerTurn() {
     });
     };
 }; 
-// computer turn logic
-function compTurn
+// computer turn logic  ** revise logic so can only happen when false
+function compTurn() {
+    if (cDraw === false) {
+        compDrawCard();
+        cDraw = true;
+    };
+    if (cAtk === false) {
+        compFieldCard();
+    }
+};
 
 
 // show back of all cards in comp hand  *** Replace with image
@@ -124,7 +130,7 @@ function showCompHandCards() {
         cHand[i].children[0].textContent = card.name;
         cHand[i].children[1].textContent = card.atk;
         cHand[i].children[2].textContent = card.hp;
-        cHand[i].setAttribute("data-name", card.name);
+        // cHand[i].setAttribute("data-name", card.name);
     });
 };
 // show values of all cards in player hand *** Style once completed
@@ -149,6 +155,18 @@ function playerDrawCard() {
         console.log("No more cards!");
     }
 };
+// computer draws new card
+function compDrawCard() {
+    if (compDeck.length > 0) {
+        for (let i = 0; i < 1; i++) {
+            compHand.push(compDeck.shift());
+        };
+        setTimeout(showCompHandCards(), 2000);
+        cDraw = true;
+    } else {
+        console.log("No more cards!");
+    };
+};
 // player plays card from hand - card is removed from playerHand and moved to playerField
 function playerFieldCard() {
     for (let i = 0; i < playerHand.length; i++) {
@@ -164,6 +182,16 @@ function playerFieldCard() {
         showPlayerFieldCards(); 
     };
 };
+// comp plays card from hand - card is removed from compHand and moved to compField
+function compFieldCard() {
+    let i = Math.floor(Math.random() * compHand.length);
+    compField.push(compHand.splice(i, 1));
+    console.log(i);
+    cHand[compHand.length].children[0].textContent = "";
+    cHand[compHand.length].children[1].textContent = "";
+    cHand[compHand.length].children[2].textContent = "";
+    showCompHandCards();
+};
 // show cards that have entered playerField in pField
 function showPlayerFieldCards() {
     playerField.forEach(function(card, i) {
@@ -171,21 +199,16 @@ function showPlayerFieldCards() {
         pField[i].children[1].textContent = "";
         pField[i].children[2].textContent = card.atk;
         pField[i].children[3].textContent = card.hp;
-        pField[i].setAttribute("data-atk", card.atk);
-        pField[i].setAttribute("data-hp", card.hp);
     });
 };
-
 function showCompFieldCards() {
     compField.forEach(function(card, i) {
         cField[i].children[0].textContent = card.name;
         cField[i].children[1].textContent = "";
         cField[i].children[2].textContent = card.atk;
         cField[i].children[3].textContent = card.hp;
-        cField[i].setAttribute("data-atk", card.atk);
-        cField[i].setAttribute("data-hp", card.hp);
-    })
-}
+    });
+};
 
 // click card in field to attack opponent
     // click event on player card
