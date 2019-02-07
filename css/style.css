@@ -1,3 +1,5 @@
+
+
 html, body {
     margin: 0;
     padding: 0;
@@ -11,7 +13,7 @@ main {
     display: inline-block;
     border: 1px solid black;
     width: 95%;
-    height: 90vh;
+    height: 95vh;
     padding: 1em;
     background-color: rgba(0, 0, 0, 0.719);
     text-align: center;
@@ -30,7 +32,7 @@ main {
 section {
     display: inline-block;
     width: 65%;
-    height: 48%;
+    height: 49%;
     border: 1px dashed white;
     margin: .1em;
     text-align: center;
@@ -92,6 +94,7 @@ section {
     width: 15%;
     height: 90%;
     vertical-align: top;
+    color: white;
 }
 
 .phname {
@@ -140,17 +143,7 @@ img {
     margin: .5em;
 }
 
-.pfieldcard {
-    display: inline-block;
-    border: 1px solid red;
-    height: 90%;
-    width: 18%;
-    margin-top: .5em;
-    vertical-align: top;
-    margin: .5em;
-}
-
-.fname {
+.cfname {
     display: inline-block;
     border: .5px dotted red;
     width: 90%;
@@ -159,7 +152,7 @@ img {
     line-height: 2em;
 }
 
-.fimage {
+.cfimage {
     display: inline-block;
     border: .5px dotted red;
     width: 90%;
@@ -167,7 +160,7 @@ img {
     margin-top: .2em;
 }
 
-.fatk {
+.cfatk {
     display: inline-block;
     border: .5px dotted red;
     border-radius: 50%;
@@ -179,7 +172,57 @@ img {
     line-height: 2.5em;
 }
 
-.fhp {
+.cfhp {
+    display: inline-block;
+    border: .5px dotted red;
+    border-radius: 50%;
+    width: 25%;
+    height: 15%;
+    text-align: center;
+    vertical-align: center;
+    line-height: 2.5em;
+}
+
+.pfieldcard {
+    display: inline-block;
+    border: 1px solid red;
+    height: 90%;
+    width: 18%;
+    margin-top: .5em;
+    vertical-align: top;
+    margin: .5em;
+}
+
+.pfname {
+    display: inline-block;
+    border: .5px dotted red;
+    width: 90%;
+    height: 12%;
+    margin-top: .2em;
+    line-height: 2em;
+}
+
+.pfimage {
+    display: inline-block;
+    border: .5px dotted red;
+    width: 90%;
+    height: 60%;
+    margin-top: .2em;
+}
+
+.pfatk {
+    display: inline-block;
+    border: .5px dotted red;
+    border-radius: 50%;
+    width: 25%;
+    height: 15%;
+    margin-top: .5em;
+    margin-right: 3em;
+    text-align: center;
+    line-height: 2.5em;
+}
+
+.pfhp {
     display: inline-block;
     border: .5px dotted red;
     border-radius: 50%;
@@ -214,4 +257,3 @@ img {
     margin-bottom: 5em;
     margin-right: 1em;
 }
-
