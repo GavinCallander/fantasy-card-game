@@ -1,15 +1,15 @@
 console.log("Up and running!");
 // player starts with three cards in their hand
-var compDeck = [
+var playerDeck = [
     {
         name: "stuff 1",
         atk: 1,
-        hp: 1
+        hp: 1,
     },
     {
         name: "stuff 2",
-        atk: 2,
-        hp: 2
+        atk: 1,
+        hp: 1,
     },
     {
         name: "stuff 3",
@@ -22,7 +22,7 @@ var compDeck = [
         hp: 4
     },
 ];
-var playerDeck = [
+var compDeck = [
     {
         name: "thing 1",
         atk: 1,
@@ -66,6 +66,7 @@ var cTurn = false;
 var cDraw = false;
 var cAtk = false;
 var cBattle = false;
+// picture variables
 
 // initialize game and place cards in player and comp hands from deck
 document.addEventListener("DOMContentLoaded", function() {
@@ -115,11 +116,12 @@ function playerTurn() {
 // computer turn logic  ** revise logic so can only happen when false
 function compTurn() {
     if (cDraw === false) {
-        compDrawCard();
+        setInterval(compDrawCard, 2000);
         cDraw = true;
     };
     if (cAtk === false) {
-        compFieldCard();
+        setInterval(compFieldCard, 2000);
+        cAtk = true;
     }
 };
 
@@ -130,7 +132,7 @@ function showCompHandCards() {
         cHand[i].children[0].textContent = card.name;
         cHand[i].children[1].textContent = card.atk;
         cHand[i].children[2].textContent = card.hp;
-        // cHand[i].setAttribute("data-name", card.name);
+        cHand[i].setAttribute("data-name", card.name);
     });
 };
 // show values of all cards in player hand *** Style once completed
@@ -167,6 +169,7 @@ function compDrawCard() {
         console.log("No more cards!");
     };
 };
+// ******* Prevent more than one card being played *******
 // player plays card from hand - card is removed from playerHand and moved to playerField
 function playerFieldCard() {
     for (let i = 0; i < playerHand.length; i++) {
@@ -175,9 +178,6 @@ function playerFieldCard() {
             pHand[i].children[0].textContent = "";
             pHand[i].children[1].textContent = "";
             pHand[i].children[2].textContent = "";
-            pHand.forEach(function(card) {
-                card.addEventListener("click", playerFieldCard);
-            });
         }; 
         showPlayerFieldCards(); 
     };
@@ -185,20 +185,20 @@ function playerFieldCard() {
 // comp plays card from hand - card is removed from compHand and moved to compField
 function compFieldCard() {
     let i = Math.floor(Math.random() * compHand.length);
-    compField.push(compHand.splice(i, 1));
-    console.log(i);
-    cHand[compHand.length].children[0].textContent = "";
-    cHand[compHand.length].children[1].textContent = "";
-    cHand[compHand.length].children[2].textContent = "";
-    showCompHandCards();
+        compField.push(compHand.splice(i, 1)[0]);
+        cHand[compHand.length].children[0].textContent = "";
+        cHand[compHand.length].children[1].textContent = "";
+        cHand[compHand.length].children[2].textContent = "";
+    showCompFieldCards();
 };
 // show cards that have entered playerField in pField
 function showPlayerFieldCards() {
     playerField.forEach(function(card, i) {
         pField[i].children[0].textContent = card.name;
-        pField[i].children[1].textContent = "";
+        pField[i].children[1].textContent = card.image;
         pField[i].children[2].textContent = card.atk;
         pField[i].children[3].textContent = card.hp;
+        pField[i].setAttribute("data-name", card.name);
     });
 };
 function showCompFieldCards() {
@@ -207,27 +207,41 @@ function showCompFieldCards() {
         cField[i].children[1].textContent = "";
         cField[i].children[2].textContent = card.atk;
         cField[i].children[3].textContent = card.hp;
+        pField[i].setAttribute("data-name", card.name);
     });
 };
 
 // click card in field to attack opponent
-    // click event on player card
-    // click event on enemy card
+    // click event on player card *
+    // click event on enemy card *
         // enemy card hp - player card atk
         // if answer is negative add to enemy hp
 
-function declareBattle() {
-    console.log("CLICK!")
-    battleField.push(this.dataset.atk);
-    console.log(battleField);
-    cField.forEach(function(card) {
-        card.addEventListener("click", setUpBattle);
-    });
+function DeclareBattle() {
+    for (let i = 0; i < playerField.length; i++) {
+        if (this.dataset.name === playerField[i].name) {
+            battleField.push(playerField[i]);
+            console.log(battleField);
+            cField.forEach(function(card) {
+                card.addEventListener("click", setUpBattle);
+            });
+        };
+    };
 };
+//     battleField.push();
+//     cField.forEach(function(card) {
+//         card.addEventListener("click", setUpBattle);
+//     });
+// };
 
 function setUpBattle() {
-    battleField.push(this.dataset.hp);
-    console.log(battleField);
+    console.log("CLICK!");
+    for (let i = 0; i < compField.length; i++) {
+        if (this.dataset.name === compField[i].name) {
+            battleField.push(compField[i]);
+            console.log(battleField);
+        }
+    }
 }
 
 function endTurn() {

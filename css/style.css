@@ -257,3 +257,8 @@ img {
     margin-bottom: 5em;
     margin-right: 1em;
 }
+
+.ills {
+    display: none;
+    visibility: hidden;
+}
