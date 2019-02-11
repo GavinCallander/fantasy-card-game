@@ -22,8 +22,8 @@ var playerDeck = [
     {
         name: "four",
         image: "",
-        atk: 10,
-        hp: 10
+        atk: 2,
+        hp: 1
     },
     {
         name: "five",
@@ -134,6 +134,8 @@ var compDisc = [];
 var playerLp = 10;
 var compLp = 10;
 var battleField = [];
+var playerCard = [];
+var compCard = [];
 var pHand = document.querySelectorAll(".phandcard");
 var pHandName = document.querySelector(".phname");
 var pHandAtk = document.querySelector(".phatk");
@@ -223,53 +225,88 @@ function playerFieldCard() {
         }
         pField.forEach(function(card) {
             card.addEventListener("click", playerBattle);
-        })
+        });
     };
 };
 // atk (once per card)************************
+// player clicks own card to push to battleField
     // if cards on comp side, battle
 // choose the card player wants to attack with
 function playerBattle() {
     for (let i = 0; i < playerField.length; i++) {
         if (this.dataset.name === playerField[i].name) {
             battleField.push(playerField[i]);
-            console.log(battleField);
+            playerCard = battleField[0];
+            pField.forEach(function(card) {
+                card.removeEventListener("click", playerBattle);
+            })
             cField.forEach(function(card) {
-                card.addEventListener("click", playerSetUpBattle);
+                card.addEventListener("click", atkCompCard);
             });
         };
-        for (let x = 0; x < compField.length; i++) {
-            battleField.push(compField[x]);
-        };
-        let a = battleField[1].hp - battleField[0].atk;
-        let b = battleField[0].hp - battleField[1].atk;
-        if (a < 1) {
-
-        }
     };  
 };
 // choose the computer card to attack
-function playerSetUpBattle() {
+function atkCompCard() {
         console.log("CLICK!");
         for (let i = 0; i < compField.length; i++) {
             if (this.dataset.name === compField[i].name) {
                 battleField.push(compField[i]);
                 console.log(battleField);
-            };
+                compCard = battleField[1];
+            }; 
+            battleResult();
         };
     };
 // battle result
 function battleResult() {
-    
-} 
-    
-    // if nothing, direct hit
-
-// if no win, end turn
-function playerEndTurn() {
-    turnOne = false;
-    compTurn();
+    let a = compCard.hp - playerCard.atk;
+    let b = playerCard.hp - compCard.atk;
+    if (a < 1) {
+        for (let i = 0; i < compField.length; i++ ) {
+            if (battleField[1].name === compField[i].name) {
+                compDisc.push(compField.splice(i, 1));
+                cField[i].children[0].textContent = "";
+                cField[i].children[1].textContent = "";
+                cField[i].children[2].textContent = "";
+                cField[i].children[3].textContent = "";
+            };
+        };
+    };
+    if (b < 1) {
+        for (let i = 0; i < playerField.length; i++) {
+            if (battleField[0].name === playerField[i].name) {
+                playerDisc.push(playerField.splice(i, 1));
+                pField[i].children[0].textContent = "";
+                pField[i].children[1].textContent = "";
+                pField[i].children[2].textContent = "";
+                pField[i].children[3].textContent = "";
+            };
+        };
+    };
+    if (a < 0) {
+        compLp = compLp + a;
+        showCompLp();
+    };
+    if (b < 0) {
+        playerLp = playerLp + b;
+        showCompLp();
+    };
+    battleField.splice(0, 2);
+    console.log(battleField);
+    endGame();
+    endTurn();
 };
+
+// player clicks comp card to push to battleField
+
+
+// result is calculated
+    // if hp of either card reduces to < 1 push cards from field array to disc array
+
+
+
+
 
 
 // ***COMP MOVE LOGIC***
@@ -290,7 +327,6 @@ function compDrawCard() {
 // field card
 function compFieldCard() {
     let i = Math.floor(Math.random() * compHand.length);
-        console.log(i);
         compField.push(compHand.splice(i, 1)[0]);
         cHand[i].children[0].textContent = "";
         cHand[i].children[1].textContent = "";
@@ -305,33 +341,38 @@ function compFieldCard() {
 // atk (once per card)
     // if cards on player field, battle
 function compBattle() {
-    let i = Math.floor(Math.random() * compField.length);
-        battleField.push(compField[i]);
-    let x = Math.floor(Math.random() * playerField.length);
-        battleField.push(playerField[x]);
-    let a = (battleField[1].hp - battleField[0].atk);
-    let b = (battleField[0].hp - battleField[1].atk);
-        console.log(b);
-    if (a < 1) {
-        playerDisc.push(playerField.splice(i, 1));
-        pField[x].children[0].textContent = "";
-        pField[x].children[1].textContent = "";
-        pField[x].children[2].textContent = "";
-    }
-    if (b < 1) {
-        playerDisc.push(playerField.splice(i, 1));
-        cField[i].children[0].textContent = "";
-        cField[i].children[1].textContent = "";
-        cField[i].children[2].textContent = "";
-    }
-    if (a < 0) {
-        playerLp = playerLp + a;
-        showPlayerLp();
+    if (playerField.length > 0) {
+        let i = Math.floor(Math.random() * compField.length);
+            battleField.push(compField[i]);
+        let x = Math.floor(Math.random() * playerField.length);
+            battleField.push(playerField[x]);
+        let a = (battleField[1].hp - battleField[0].atk);
+        let b = (battleField[0].hp - battleField[1].atk);
+        if (a < 1) {
+            playerDisc.push(playerField.splice(i, 1));
+            pField[x].children[0].textContent = "";
+            pField[x].children[1].textContent = "";
+            pField[x].children[2].textContent = "";
+            pField[x].children[3].textContent = "";
+        }
+        if (b < 1) {
+            playerDisc.push(playerField.splice(i, 1));
+            cField[i].children[0].textContent = "";
+            cField[i].children[1].textContent = "";
+            cField[i].children[2].textContent = "";
+            cField[i].children[3].textContent = "";
+        }
+        if (a < 0) {
+            playerLp = playerLp + a;
+            showPlayerLp();
+        };
+        if (b < 0) {
+            compLp = compLp + b;
+            showCompLp();
+        };
     };
-    if (b < 0) {
-        compLp = compLp + b;
-        showCompLp();
-    };
+    endGame();
+    endTurn();
 };
 // battle result
     // if not, direct hit
